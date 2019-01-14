@@ -41,7 +41,6 @@ export class Restaurant {
     return query
   }
   static getRatings(restaurant) {
-    console.log(restaurant)
     return restaurant.ref
       .collection('ratings')
       .orderBy('timestamp', 'desc')

@@ -33,7 +33,7 @@ window.onload = function() {
         price: 0
       },
       rating: {
-        rating: '2',
+        rating: '',
         comment: ''
       },
       ratings: [],
@@ -53,10 +53,6 @@ window.onload = function() {
       clickCreateMockData: function(e) {
         Restaurant.createMockData()
       },
-      clickFilter: function() {
-        this.renderList()
-        this.isShowFilter = false
-      },
       clickShowDetail: function(id) {
         const that = this
         Restaurant.getRestaurant(id).then(function(doc) {
@@ -71,10 +67,15 @@ window.onload = function() {
         })
         this.isShowDetail = true
       },
-      clickShowAddRating: function(e) {
+      clickFilter: function() {
+        this.renderList()
+        this.isShowFilter = false
+      },
+      clickShowAddRating: function() {
+        this.rating = { rating: '2', comment: '' }
         this.isShowAddRating = true
       },
-      clickSaveRating: function(e) {
+      clickSaveRating: function() {
         Restaurant.addRating(this.detail.id, this.rating)
         this.isShowAddRating = false
       },
