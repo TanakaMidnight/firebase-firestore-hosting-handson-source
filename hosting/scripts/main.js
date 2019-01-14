@@ -51,9 +51,7 @@ window.onload = function() {
     },
     methods: {
       clickCreateMockData: function(e) {
-        Restaurant.createMockData().then(function(e) {
-          console.log('createMockComplete!')
-        })
+        Restaurant.createMockData()
       },
       clickFilter: function() {
         this.renderList()

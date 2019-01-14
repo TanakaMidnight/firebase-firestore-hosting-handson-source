@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <titile>Firebase HandsOn</titile>
+    <title>Firebase HandsOn</title>
     <link
       rel="icon"
       type="image/vnd.microsoft.icon"
@@ -31,9 +31,17 @@
           </v-btn>
         </v-toolbar>
         <v-content v-if="noData">
-          <v-layout>
-            <span>データがありません。</span><br />
-            <v-btn @click="clickCreateMockData"> モックデータの作成 </v-btn>
+          <v-layout row justify-space-around>
+            <v-flex xs6>
+              <v-card>
+                <v-card-title>データがありません。</v-card-title>
+                <v-card-actions>
+                  <v-btn @click="clickCreateMockData">
+                    モックデータの作成
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
           </v-layout>
         </v-content>
         <v-content v-else>

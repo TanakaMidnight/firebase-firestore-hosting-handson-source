@@ -8,31 +8,36 @@ export class Restaurant {
       .limit(1)
   }
   static getRestaurant(id) {
-    return firebase
-      .firestore()
-      .collection('restaurants')
-      .doc(id)
-      .get()
+    // Step.7 FireStore から 1 度きりのデータを表示
+    // return firebase
+    //   .firestore()
+    //   .collection('restaurants')
+    //   .doc(id)
+    //   .get()
   }
   static getRestaurants(filters) {
-    let query = firebase
-      .firestore()
-      .collection('restaurants')
-      .limit(50)
-    if (filters.category && filters.category != '') {
-      query = query.where('category', '==', filters.category)
-    }
-    if (filters.city && filters.city != '') {
-      query = query.where('city', '==', filters.city)
-    }
-    if (filters.price && filters.price != '') {
-      query = query.where('price', '==', filters.price)
-    }
-    if (filters.sort === 'rating') {
-      query = query.orderBy('avgRating', 'desc')
-    } else if (filters.sort === 'review') {
-      query = query.orderBy('numRatings', 'desc')
-    }
+    let query
+    // Step.6 FireStore からリアルタイムにデータを表示
+    // query = firebase
+    //   .firestore()
+    //   .collection('restaurants')
+    //   .limit(50)
+
+    // Step.8 データの並び替えとフィルタリング
+    // if (filters.category && filters.category != '') {
+    //   query = query.where('category', '==', filters.category)
+    // }
+    // if (filters.city && filters.city != '') {
+    //   query = query.where('city', '==', filters.city)
+    // }
+    // if (filters.price && filters.price != '') {
+    //   query = query.where('price', '==', filters.price)
+    // }
+    // if (filters.sort === 'rating') {
+    //   query = query.orderBy('avgRating', 'desc')
+    // } else if (filters.sort === 'review') {
+    //   query = query.orderBy('numRatings', 'desc')
+    // }
     return query
   }
   static getRatings(restaurant) {
@@ -42,47 +47,40 @@ export class Restaurant {
       .orderBy('timestamp', 'desc')
       .get()
   }
-
   static getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
   }
 
   static addRestaurant(data) {
-    const collection = firebase.firestore().collection('restaurants')
-    return collection.add(data)
-  }
-  static addRestaurant(data) {
-    const collection = firebase.firestore().collection('restaurants')
-    return collection.add(data)
+    // Step.5 FireStore にデータを書き込む
+    // const collection = firebase.firestore().collection('restaurants')
+    // return collection.add(data)
   }
   static addRating(id, rating) {
-    rating.timestamp = new Date()
-    rating.userId = firebase.auth().currentUser.uid
-
-    var collection = firebase.firestore().collection('restaurants')
-    var document = collection.doc(id)
-    var newRatingDocument = document.collection('ratings').doc()
-
-    return firebase.firestore().runTransaction(function(transaction) {
-      return transaction.get(document).then(function(doc) {
-        var data = doc.data()
-
-        var newAverage =
-          (data.numRatings * data.avgRating + rating.rating) /
-          (data.numRatings + 1)
-
-        transaction.update(document, {
-          numRatings: data.numRatings + 1,
-          avgRating: newAverage
-        })
-        return transaction.set(newRatingDocument, rating)
-      })
-    })
+    // Step.10 トランザクションの設定
+    // rating.timestamp = new Date()
+    // rating.userId = firebase.auth().currentUser.uid
+    // const collection = firebase.firestore().collection('restaurants')
+    // const document = collection.doc(id)
+    // const newRatingDocument = document.collection('ratings').doc()
+    // return firebase.firestore().runTransaction(function(transaction) {
+    //   return transaction.get(document).then(function(doc) {
+    //     const data = doc.data()
+    //     const newAverage =
+    //       (data.numRatings * data.avgRating + rating.rating) /
+    //       (data.numRatings + 1)
+    //     transaction.update(document, {
+    //       numRatings: data.numRatings + 1,
+    //       avgRating: newAverage
+    //     })
+    //     return transaction.set(newRatingDocument, rating)
+    //   })
+    // })
   }
 
   static createMockData() {
     let promises = []
-    for (var i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i++) {
       const name =
         this.getRandomItem(constRestaurant.firstWords) +
         this.getRandomItem(constRestaurant.secondWords)
